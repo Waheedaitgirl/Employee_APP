@@ -14,6 +14,7 @@ import CustomStatusBar from '../../components/StatusBar';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import { useIsFocused } from '@react-navigation/native';
 import { getLeavesList } from '../../api';
+import moment from 'moment';
 import LeaveCard from './LeaveCard'
     const HomeScreen = ({navigation}) => {
         const {user} = useSelector(state => state.LoginReducer)
@@ -77,7 +78,7 @@ import LeaveCard from './LeaveCard'
                 setEndDate(date)
             }
             if(startDate !== "" || endDate !== ""){
-                let date_filter = data.filter(function(item){
+                var date_filter = data.filter(function(item){
                    
                         if(moment(item.requested_date).isBetween(moment(startDate), moment(endDate))){
                             return item

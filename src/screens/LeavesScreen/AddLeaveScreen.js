@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment/moment';
 import {Icon, NativeBaseProvider, Select} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {
@@ -6,8 +6,9 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View,SafeAreaView
 } from 'react-native';
+
 import {scale, verticalScale} from 'react-native-size-matters';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useSelector} from 'react-redux';
@@ -23,8 +24,10 @@ import {AppScreenWidth, width} from '../../constants/sacling';
 import {colors, fonts} from '../../constants/theme';
 import {commonStyles, textStyles} from '../../styles';
 import selectStyles from '../../styles/selectStyles';
+
 const _format = 'YYYY-MM-DD';
-const _today = moment().format(_format);
+// var now = moment().format();
+let _today = moment().format(_format);
 const _maxDate = moment().add(1, 'days').format(_format);
 const AddLeaveScreen = ({navigation}) => {
   const [endDate, setEndDate] = useState(_today);
@@ -78,7 +81,7 @@ const AddLeaveScreen = ({navigation}) => {
       setStartDate(date);
       if (moment(date).isSameOrBefore(moment(endDate))) {
         setDateError(false);
-        let days = moment(date).diff(moment(endDate), 'days');
+        var days = moment(date).diff(moment(endDate), 'days');
         let hours = (days + 1) * 8;
         if (hours.toString().length === 1) {
           setNumberofHours(`0${hours}:00`);

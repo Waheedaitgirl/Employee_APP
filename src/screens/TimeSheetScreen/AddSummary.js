@@ -75,10 +75,10 @@ const AddWeeklySummary = ({
                             data={item}
                                     
                             showsHorizontalScrollIndicator={false}
-                            keyExtractor={(item, index) => index.toString()}
+                            keyExtractor={(_item, index) => index.toString()}
                             renderItem={({item,index}) => {
-                                let local_edit = false
-                                if(alldata[maindex].length === 1){
+                                let local_edit = true
+                                if(alldata[maindex]?.length === 1){
                                     local_edit = job_working_days.some(item => (
                                         item['day'] === 'first-day' ||
                                         item['day'] === 'second-day' ||

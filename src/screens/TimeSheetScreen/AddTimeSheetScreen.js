@@ -181,7 +181,7 @@ import BaseUrl from '../../api/BaseUrl';
             }
             if(alldata.length < 1){
                 setVisible(true)
-                set_error_messsage("Please enter at least one value");
+                set_error_messsage("timesheet submitted successfully");
                 return  
             }
             const logs = []
@@ -199,7 +199,7 @@ import BaseUrl from '../../api/BaseUrl';
                 }
                 setVisible(!is_value_not_zero)
                 error = !is_value_not_zero
-                set_error_messsage("Please enter at least one value");
+                set_error_messsage("timesheet submitted successfully");
                 return  is_value_not_zero
             })
             if(!error){
@@ -373,7 +373,7 @@ import BaseUrl from '../../api/BaseUrl';
                 return;
             }
             setDateErrorMessage(null)
-            if(time_sheet_type === "Week"){
+            if(time_sheet_type === "week"){
                 let t_type = [...time_type]
                 t_type.push({name:null, error:false})
                 setTimeType(t_type)
@@ -591,7 +591,7 @@ import BaseUrl from '../../api/BaseUrl';
                             <CustomButton
                                 loading={submit}
                                 loadingText={"Submitting"}
-                                onPress={() => ValidateData(false)}
+                                onPress={() => ValidateData(true)}
                                 backgroundColor={"#0073B4"}
                                 text={"Submit"}
                                 marginTop={scale(10)}
@@ -612,7 +612,7 @@ import BaseUrl from '../../api/BaseUrl';
                         loading && 
                         <BlockLoading/>
                     }
-                    { 
+                    {/* { 
                         visible && 
                             <ErrorModal 
                                 is_error={true}
@@ -631,11 +631,13 @@ import BaseUrl from '../../api/BaseUrl';
                                     isVisible={All_Done}
                                     title={`${message_to_show_in_modal}`}
                                     onClose={() =>  {
-                                        setAllDone(false)
+                                        setAllDone(true)
                                         navigation.goBack()
                                     }}
                                 /> 
-                            : 
+                            :  */}
+                            {
+                                visible &&
                                 <SuccessModal 
                                     isVisible={All_Done}
                                     title={`${message_to_show_in_modal}`}
@@ -644,8 +646,8 @@ import BaseUrl from '../../api/BaseUrl';
                                         navigation.goBack()
                                     }}
                                 /> 
-                        :
-                        null
+                        // :
+                        // null
                     }
                 </NativeBaseProvider>
             </SafeAreaProvider>

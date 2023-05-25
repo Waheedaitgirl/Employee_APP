@@ -94,7 +94,7 @@ const AddEducationScreen = ({navigation}) => {
       //   }
       // })
       .catch(error => {
-        Alert.alert('THere is some issue with request. Please try agian later',error.message);
+        Alert.alert('There is some issues in your request,Please try agian later',error.message);
       });
   };
   return (
@@ -115,6 +115,7 @@ const AddEducationScreen = ({navigation}) => {
             style={{
               alignItems: 'center',
               flex:1,
+              
              
             }}>
             <Image
