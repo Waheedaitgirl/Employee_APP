@@ -68,15 +68,15 @@ const AddExperienceScreen = ({navigation}) => {
       .then(response => response.json())
       // .then(result => console.log(result))
       // .catch(error => console.log('error', error));
-      .then(result => {
-        if (result.status == 200) {
-          Alert.alert(result.message);
-        } else {
-          Alert.alert(
-            'THere is some issue with request. Please try agian later',
-          );
-        }
-      })
+      // .then(result => {
+      //   if (result.status == 200) {
+      //     Alert.alert(result.message);
+      //   } else {
+      //     Alert.alert(
+      //       'THere is some issue with request. Please try agian later',
+      //     );
+      //   }
+      // })
       .catch(error => {
         Alert.alert('THere is some issue with request. Please try agian later',error);
       });

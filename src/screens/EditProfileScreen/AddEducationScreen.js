@@ -1,5 +1,5 @@
 import React, {useReducer} from 'react';
-import {SafeAreaView, ScrollView, KeyboardAvoidingView,Image,Platform, Text, StatusBar, View} from 'react-native';
+import {SafeAreaView, ScrollView, KeyboardAvoidingView,Image,Platform, Text, StatusBar, View, Alert} from 'react-native';
 import CalenderInput from '../../components/DateInputMethod';
 import {colors, fonts} from '../../constants/theme';
 import CustomTextInput from '../../components/TextInput';
@@ -48,18 +48,21 @@ const AddEducationScreen = ({navigation}) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Bearer 4545980ce66bd555d903f7dc739f91e631606eb1");
-    myHeaders.append("Cookie", "PHPSESSID=u1tqldsnh1mp6tjjiratbpsk1q");
+   // myHeaders.append("Cookie", "PHPSESSID=u1tqldsnh1mp6tjjiratbpsk1q");
     
     var raw = JSON.stringify({
       "candidate_id": "1336",
       "education_title": "BS Computer Sciences",
       "education_level": "0",
       "education_details": "Loyola University, Chicago, IL Master of Science, Information Systems Management",
-      "education_start_date": "2022-08-09",
+      "education_start_dapiate": "2022-08-09",
       "education_end_date": "2022-08-09",
       "is_currently_studying": "0"
     });
     
+// adding the api'request.
+
+
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
@@ -68,18 +71,30 @@ const AddEducationScreen = ({navigation}) => {
     };
     
     fetch("https://xapi.recruitbpm.com/education", requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        if (result.status == 200) {
-          Alert.alert(result.message);
-        } else {
-          Alert.alert(
-            'THere is some issue with request. Please try agian later',
-          );
-        }
-      })
+      .then((response)=>{
+        Alert.alert(response.JSON.stringify(response.data));
+        var getRequestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
+        fetch("https://xapi.recruitbpm.com/education", getRequestOptions).then((response) => {
+          Alert.alert(response.JSON.stringify(response.data));
+        });
+        
+        
+        })
+      // .then(result => {
+      //   if (result.status == 200) {
+      //     Alert.alert(result.message);
+      //   } else {
+      //     Alert.alert(
+      //       'THere is some issue with request. Please try agian later',
+      //     );
+      //   }
+      // })
       .catch(error => {
-        Alert.alert('THere is some issue with request. Please try agian later',error);
+        Alert.alert('THere is some issue with request. Please try agian later',error.message);
       });
   };
   return (

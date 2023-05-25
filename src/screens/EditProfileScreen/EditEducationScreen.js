@@ -40,7 +40,7 @@ fetch("https://xapi.recruitbpm.com/education/146", requestOptions)
                 }
               })
               .catch(error => {
-                Alert.alert('THere is some issue with request. Please try agian later');
+                Alert.alert('THere is some issue with request. Please try agian later',error);
               });
           };
         return (
@@ -50,7 +50,7 @@ fetch("https://xapi.recruitbpm.com/education/146", requestOptions)
                     <CustomHeader 
                         show_backButton={true}
                         isdrawer={false}
-                        onPress={() => navigation.goBack()}
+                        onPress={() => navigation.editEducation()}
                         title={"Edit Certificate"}
                     />
                 </View>

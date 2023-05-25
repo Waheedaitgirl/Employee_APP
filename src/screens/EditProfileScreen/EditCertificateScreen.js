@@ -47,7 +47,7 @@ import { colors } from '../../constants/theme';
                     <CustomHeader 
                         show_backButton={true}
                         isdrawer={false}
-                        onPress={() => navigation.goBack()}
+                        onPress={() => onEditCertificate()}
                         title={"Edit Certificate"}
                     />
                 </View>

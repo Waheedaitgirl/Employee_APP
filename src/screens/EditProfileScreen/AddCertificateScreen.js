@@ -51,7 +51,7 @@ fetch("https://xapi.recruitbpm.com/certifications", requestOptions)
                     <CustomHeader 
                         show_backButton={true}
                         isdrawer={false}
-                        onPress={() => navigation.goBack()}
+                        onPress={() => navigation.addCertificate()}
                         title={"Add Certificate"}
                     />
                 </View>
