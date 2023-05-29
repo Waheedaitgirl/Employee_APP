@@ -25,18 +25,18 @@ const DrawerContentt = ({ navigation, props }) => {
                         justifyContent:"flex-start"}} > 
                         <View style={styles.drawercontent}>  
                             <Image 
-                                source={require("../assets/images/dummy.png")} 
+                                source={require("../assets/images/avatar.png")} 
                                 style={{
-                                    width:scale(70),
+                                    width:scale(50),
                                     borderRadius:scale(100),
-                                    height:scale(70), 
+                                    height:scale(50), 
                                     resizeMode:"cover"
                                 }}
                             />
                             <View style={{justifyContent:"flex-start"}}>
-                                {/* <Text style={styles.textStyleHeader}>{user.first_name} {user.last_name}</Text> */}
+                                <Text style={styles.textStyleHeader}>{user.first_name} {user.last_name}</Text>
                             </View> 
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 onPress={() => navigation.navigate(MainRoutes.EditProfileScreen) }
                                 style={{
                                     position:"absolute",
@@ -44,7 +44,7 @@ const DrawerContentt = ({ navigation, props }) => {
                                     right:scale(10)
                                 }} >
                                 <Entypo name="edit" color={"#fff"} size={scale(20)} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
 
                         <TouchableOpacity   

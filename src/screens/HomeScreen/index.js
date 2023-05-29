@@ -56,6 +56,7 @@ const HomeScreen = ({navigation}) => {
             alignSelf: 'center',
           }}>
           <Text style={styles.headingtext}>Welcome!</Text>
+          <Text style={styles.nameText} >{'\t'}{user.name}</Text>
           {/* <Text style={styles.nameText}>{user.preferred_name}</Text> */}
           {/* <Text style={styles.paragraph} >Streamline your company’s business efficiently managing candidates, jobs and placements</Text> */}
         </View>
