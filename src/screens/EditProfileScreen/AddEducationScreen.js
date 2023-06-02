@@ -70,7 +70,7 @@ const AddEducationScreen = ({navigation}) => {
       redirect: 'follow'
     };
     
-    fetch("https://xapi.recruitbpm.com/education", requestOptions)
+    fetch("https://api.recruitbpm.com/education", requestOptions)
       .then((response)=>{
         Alert.alert(response.JSON.stringify(response.data));
         var getRequestOptions = {
@@ -78,7 +78,7 @@ const AddEducationScreen = ({navigation}) => {
           headers: myHeaders,
           redirect: 'follow'
         };
-        fetch("https://xapi.recruitbpm.com/education", getRequestOptions).then((response) => {
+        fetch("https://api.recruitbpm.com/education", getRequestOptions).then((response) => {
           Alert.alert(response.JSON.stringify(response.data));
         });
         

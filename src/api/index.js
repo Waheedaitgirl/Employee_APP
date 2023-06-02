@@ -207,3 +207,12 @@ export async function DeleteExpense (id){
         method: 'delete'
     });
 }
+
+//general profile data
+
+export function getcandidateprofiledata(account_id){
+    return request({
+        url:`leaves?account_id=${account_id}&type=list_policy`,
+        method:"get"
+    })
+}

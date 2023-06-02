@@ -36,7 +36,7 @@ const DrawerContentt = ({ navigation, props }) => {
                             <View style={{justifyContent:"flex-start"}}>
                                 <Text style={styles.textStyleHeader}>{user.first_name} {user.last_name}</Text>
                             </View> 
-                            {/* <TouchableOpacity
+                            <TouchableOpacity
                                 onPress={() => navigation.navigate(MainRoutes.EditProfileScreen) }
                                 style={{
                                     position:"absolute",
@@ -44,7 +44,7 @@ const DrawerContentt = ({ navigation, props }) => {
                                     right:scale(10)
                                 }} >
                                 <Entypo name="edit" color={"#fff"} size={scale(20)} />
-                            </TouchableOpacity> */}
+                            </TouchableOpacity>
                         </View>
 
                         <TouchableOpacity   

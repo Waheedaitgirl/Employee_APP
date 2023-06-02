@@ -8,7 +8,7 @@ import { AuthRoutes } from '../../constants/routes';
 import { scale } from 'react-native-size-matters';
 import {colors} from '../../constants/theme';
 import Spacer from '../../components/Spacer';
-import DrawLine from '../../components/DrawLine'
+import DrawLine from '../../components/DrawLine';
 import { width } from '../../constants/sacling';
     const ForgotPasswordScreen = ({navigation}) => {
         const [email_address, setEmailAddress] = useState("")
