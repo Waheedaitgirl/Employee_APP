@@ -56,7 +56,10 @@ const HomeScreen = ({navigation}) => {
             alignSelf: 'center',
           }}>
           <Text style={styles.headingtext}>Welcome!</Text>
-          <Text style={styles.nameText} >{'\t'}{user.name}</Text>
+          <Text style={styles.nameText}>
+            {user?.first_name} {user?.last_name}
+          </Text>
+          {/* <Text style={styles.nameText} >{'\t'}{user.name}</Text> */}
           {/* <Text style={styles.nameText}>{user.preferred_name}</Text> */}
           {/* <Text style={styles.paragraph} >Streamline your company’s business efficiently managing candidates, jobs and placements</Text> */}
         </View>
@@ -105,7 +108,7 @@ const HomeScreen = ({navigation}) => {
             <Text style={styles.textStyle}>My Profile</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.row}>
+        {/* <View style={styles.row}>
           <TouchableOpacity
             onPress={() => navigation.navigate(MainRoutes.MyReferencesScreen)}
             style={styles.box}>
@@ -115,8 +118,8 @@ const HomeScreen = ({navigation}) => {
               size={scale(50)}
             />
             <Text style={styles.textStyle}>References</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </TouchableOpacity> */}
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate(MainRoutes.MyRefrerralsScreen)}
             style={styles.box}>
             <FontAwesome
@@ -125,8 +128,8 @@ const HomeScreen = ({navigation}) => {
               size={scale(50)}
             />
             <Text style={styles.textStyle}>Referrals</Text>
-          </TouchableOpacity>
-        </View>
+          </TouchableOpacity> */}
+        {/* </View> */}
 
         <View style={styles.main2}>
           <Text style={styles.paragraph}>
@@ -173,7 +176,7 @@ const styles = StyleSheet.create({
   nameText: {
     ...textStyles.title,
     fontSize: scale(18),
-    marginTop: -10,
+    marginTop: 10,
     marginHorizontal: scale(55),
     color: '#fff',
     textAlign: 'left',
@@ -190,7 +193,7 @@ const styles = StyleSheet.create({
     width: AppScreenWidth,
     alignSelf: 'center',
     flexDirection: 'row',
-    marginVertical: hp(2),
+    marginVertical: hp(4),
     justifyContent: 'space-evenly',
   },
   box: {

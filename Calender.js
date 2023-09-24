@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import moment from 'moment' // 2.20.1
 import { View } from 'react-native' // 0.0.1
 import { Calendar } from 'react-native-calendars'
-const _format = 'YYYY-MM-DD'
+const _format = 'DD-MMM-YYYY' //  YYYY-MM-DD
 const _today = moment().format(_format)
 const _maxDate = moment().add(100, 'days').format(_format)
 

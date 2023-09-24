@@ -9,6 +9,7 @@ const StatusReducer = (state = initialState, action) => {
             return {
                 ...state,
                 status:action.payload,
+            
             };
         default:
             return state;

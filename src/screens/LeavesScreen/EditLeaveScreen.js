@@ -160,7 +160,7 @@ const _today = moment().format(_format)
                 "comments":leaveNote,
                 "module_id":"4",
                 "requested_by":user.candidate_id,
-                "requested_date":`${moment().format("YYYY-MM-DD HH:mm:ss")}`,
+                "requested_date":`${moment().format("DD-MMM-YYYY HH:mm:ss")}`,
                 "account_id":user.account_id
             }
 

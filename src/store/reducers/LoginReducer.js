@@ -13,6 +13,11 @@ const LoginReducer = (state = initialState, action) => {
                 token:action.payload.access_token,
                 is_logged_in:true,
             };
+            case 'UPDATE':
+                return {
+                  ...state,
+                  user: action.payload,
+                };
         case LOCAL_LOGIN:
             return{
                 ...state,

@@ -32,7 +32,9 @@ const CustomHeader = ({
   title,
   onPress,
   NotificationPress,
-  is_leave_header=false,
+  is_leave_header = false,
+  is_expense_header = false,
+  is_timesheet_header = false,
   FilterPress,
   SearchPress,
 }) => {
@@ -55,8 +57,8 @@ const CustomHeader = ({
             placeholder={'Search Here'}
             placeholderTextColor={'#000'}
             style={styles.TextInput}
-            onChangeText = {(text) => SearchPress(text)}
-          /> 
+            onChangeText={text => SearchPress(text)}
+          />
 
           <TouchableOpacity onPress={() => setShowSearch(!show_search)}>
             <AntDesign name={'close'} color={'#000'} size={scale(20)} />
@@ -77,63 +79,135 @@ const CustomHeader = ({
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => setShowMenu(!showmenu)}>
-            {is_leave_header ?
-             <Menu
-             onBackdropPress={() => setShowMenu(!showmenu)}
-             renderer={ContextMenu}>
-             <MenuTrigger>
-               <FontAwesome name={'filter'} color={'#fff'} size={scale(18)} />
-             </MenuTrigger>
-             <MenuOptions customStyles={optionsStyles}>
-               <MenuOption
-                 customStyles={optionStyles}
-                 value={'All'}
-                 onSelect={() => FilterPress('All')}>
-                 <Text style={textStyles.Label}>All</Text>
-               </MenuOption>
-               <MenuOption
-                 customStyles={optionStyles}
-                 value="Pending"
-                 onSelect={() => FilterPress('0')}>
-                 <Text style={textStyles.Label}>Pending</Text>
-               </MenuOption>
-               <MenuOption
-                 customStyles={optionStyles}
-                 value="Approved"
-                 onSelect={() => FilterPress('1')}>
-                 <Text style={textStyles.Label}>Approved</Text>
-               </MenuOption>
-               <MenuOption
-                 customStyles={optionStyles}
-                 value="Declined"
-                 onSelect={() => FilterPress('2')}>
-                 <Text style={textStyles.Label}>Declined</Text>
-               </MenuOption>
-             </MenuOptions>
-           </Menu>
-            :
-            <Menu
-              onBackdropPress={() => setShowMenu(!showmenu)}
-              renderer={ContextMenu}>
-              <MenuTrigger>
-                <FontAwesome name={'filter'} color={'#fff'} size={scale(18)} />
-              </MenuTrigger>
-              <MenuOptions customStyles={optionsStyles}>
-                <MenuOption
-                  customStyles={optionStyles}
-                  value={'All'}
-                  onSelect={() => FilterPress('All')}>
-                  <Text style={textStyles.Label}>All</Text>
-                </MenuOption>
-                <MenuOption
-                  customStyles={optionStyles}
-                  value="Unsubmitted"
-                  onSelect={() => FilterPress('Draft')}>
-                  <Text style={textStyles.Label}>Unsubmitted</Text>
-                </MenuOption>
-              </MenuOptions>
-            </Menu>
-          }
+            {is_leave_header ? (
+              <Menu
+                onBackdropPress={() => setShowMenu(!showmenu)}
+                renderer={ContextMenu}>
+                <MenuTrigger>
+                  <FontAwesome
+                    name={'filter'}
+                    color={'#fff'}
+                    size={scale(18)}
+                  />
+                </MenuTrigger>
+                <MenuOptions customStyles={optionsStyles}>
+                  <MenuOption
+                    customStyles={optionStyles}
+                    value={'All'}
+                    onSelect={() => FilterPress('All')}>
+                    <Text style={textStyles.Label}>All</Text>
+                  </MenuOption>
+                  <MenuOption
+                    customStyles={optionStyles}
+                    value="Pending"
+                    onSelect={() => FilterPress('0')}>
+                    <Text style={textStyles.Label}>Pending</Text>
+                  </MenuOption>
+                  <MenuOption
+                    customStyles={optionStyles}
+                    value="Approved"
+                    onSelect={() => FilterPress('1')}>
+                    <Text style={textStyles.Label}>Approved</Text>
+                  </MenuOption>
+                  <MenuOption
+                    customStyles={optionStyles}
+                    value="Declined"
+                    onSelect={() => FilterPress('2')}>
+                    <Text style={textStyles.Label}>Declined</Text>
+                  </MenuOption>
+                </MenuOptions>
+              </Menu>
+            ) : (
+              (is_expense_header = <Menu
+                onBackdropPress={() => setShowMenu(!showmenu)}
+                renderer={ContextMenu}>
+                <MenuTrigger>
+                  <FontAwesome
+                    name={'filter'}
+                    color={'#fff'}
+                    size={scale(18)}
+                  />
+                </MenuTrigger>
+                <MenuOptions customStyles={optionsStyles}>
+                  <MenuOption
+                    customStyles={optionStyles}
+                    value={'All'}
+                    onSelect={() => FilterPress('All')}>
+                    <Text style={textStyles.Label}>All</Text>
+                  </MenuOption>
+                  <MenuOption
+                    customStyles={optionStyles}
+                    value={'Approved'}
+                    onSelect={() => FilterPress('0')}>
+                    <Text style={textStyles.Label}>Approved</Text>
+                  </MenuOption>
+                  <MenuOption
+                    customStyles={optionStyles}
+                    value={'Submitted'}
+                    onSelect={() => FilterPress('1')}>
+                    <Text style={textStyles.Label}>Submitted</Text>
+                  </MenuOption>
+                  <MenuOption
+                    customStyles={optionStyles}
+                    value={'Unsubmitted'}
+                    onSelect={() => FilterPress('2')}>
+                    <Text style={textStyles.Label}>Unsubmitted</Text>
+                  </MenuOption>
+                  <MenuOption
+                    customStyles={optionStyles}
+                    value={'Rejected'}
+                    onSelect={() => FilterPress('3')}>
+                    <Text style={textStyles.Label}>Rejected</Text>
+                  </MenuOption>
+                </MenuOptions>
+              </Menu> ? (
+                (is_timesheet_header = (
+                  <Menu
+                    onBackdropPress={() => setShowMenu(!showmenu)}
+                    renderer={ContextMenu}>
+                    <MenuTrigger>
+                      <FontAwesome
+                        name={'filter'}
+                        color={'#fff'}
+                        size={scale(18)}
+                      />
+                    </MenuTrigger>
+                    <MenuOptions customStyles={optionsStyles}>
+                      <MenuOption
+                        customStyles={optionStyles}
+                        value={'All'}
+                        onSelect={() => FilterPress('All')}>
+                        <Text style={textStyles.Label}>All</Text>
+                      </MenuOption>
+                      <MenuOption
+                        customStyles={optionStyles}
+                        value={'Approved'}
+                        onSelect={() => FilterPress('0')}>
+                        <Text style={textStyles.Label}>Approved</Text>
+                      </MenuOption>
+                      <MenuOption
+                        customStyles={optionStyles}
+                        value={'Submitted'}
+                        onSelect={() => FilterPress('1')}>
+                        <Text style={textStyles.Label}>Submitted</Text>
+                      </MenuOption>
+                      <MenuOption
+                        customStyles={optionStyles}
+                        value={'Unsubmitted'}
+                        onSelect={() => FilterPress('2')}>
+                        <Text style={textStyles.Label}>Unsubmitted</Text>
+                      </MenuOption>
+                      <MenuOption
+                        customStyles={optionStyles}
+                        value={'Rejected'}
+                        onSelect={() => FilterPress('3')}>
+                        <Text style={textStyles.Label}>Rejected</Text>
+                      </MenuOption>
+                    </MenuOptions>
+                  </Menu>
+                ))
+              ) : null)
+            )}
           </TouchableOpacity>
           {/* <TouchableOpacity onPress={NotificationPress}>
             <Ionicons name={'notifications'} color={'#fff'} size={scale(18)} />

@@ -2,6 +2,7 @@ import request from './request';
 
 // post requests with data
 export function candidateLogin(data){
+  
     return request({
         url: 'candidatemobilelogin',
         method: 'post',
@@ -17,7 +18,7 @@ export function getStatusList(id){
 }
 export function addTimeSheet(data){
     return request({
-        url: `timesheet`,
+        url: `timesheet?isApp=1`,
         method: 'post',
         data
     });
@@ -208,11 +209,3 @@ export async function DeleteExpense (id){
     });
 }
 
-//general profile data
-
-export function getcandidateprofiledata(account_id){
-    return request({
-        url:`leaves?account_id=${account_id}&type=list_policy`,
-        method:"get"
-    })
-}

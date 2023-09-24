@@ -30,6 +30,11 @@ import EditLeaveScreen from '../screens/LeavesScreen/EditLeaveScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import JobApplyScreen from '../screens/CalendarScreen/JobApply';
 
+// 
+
+import EditCertificateScreen from '../screens/EditProfileScreen/EditCertificateScreen';
+import EditEducationScreen from '../screens/EditProfileScreen/EditEducationScreen';
+import EditExperienceScreen from '../screens/EditProfileScreen/EditExperienceScreen';
 
 
 // Refraals Screen
@@ -47,6 +52,30 @@ const MainStack = () => {
         <Stack.Navigator
             initialRouteName='HomeScreen'
         >
+          <Stack.Screen
+                name="EditCertificateScreen"
+                component={EditCertificateScreen}
+                options={{
+                    headerShown: true,
+                    title:"Edit Certificate"
+                }}
+            />
+            <Stack.Screen
+                name="EditExperienceScreen"
+                component={EditExperienceScreen}
+                options={{
+                    headerShown: true,
+                    title:"Edit Experience"
+                }}
+            />
+            <Stack.Screen
+                name="EditEducationScreen"
+                component={EditEducationScreen}
+                options={{
+                    headerShown: true,
+                    title:"Edit Education"
+                }}
+            />
             <Stack.Screen 
                 name="HomeScreen" 
                 component={HomeScreen} 

@@ -55,7 +55,7 @@ const AddLeaveScreen = ({navigation}) => {
   const [processing, setProcessing] = useState(false);
   const [is_half_day, setIsHalfDay] = useState(false);
   useEffect(() => {
-    getpolicylist(user.account_id)
+    getpolicylist(user?.account_id)
       .then(response => {
         if (response.status === 200) {
           setPolicy(response.data.data);
@@ -186,7 +186,7 @@ const AddLeaveScreen = ({navigation}) => {
       comments: leaveNote,
       module_id: '4',
       requested_by: user.candidate_id,
-      requested_date: `${moment().format('YYYY-MM-DD HH:mm:ss')}`,
+      requested_date: `${moment().format('DD-MMM-YYYY HH:mm:ss')}`,
       account_id: user.account_id,
     };
 
@@ -225,7 +225,7 @@ const AddLeaveScreen = ({navigation}) => {
             <Spacer />
             <CustomTextInput
               placeholder={'Employee'}
-              value={`${user.first_name} ${user.last_name}`}
+              value={`${user?.first_name} ${user?.last_name}`}
               onChangeText={text => setLeaveNotes(text)}
               errorMessage={leavenoteErrorMessage}
               borderRadius={scale(5)}

@@ -64,7 +64,7 @@ const MODULE_ID = '54'
         ])
 
         useEffect(() => {
-            listCandidateJobs(user.account_id, user.candidate_id, "2").then((response) => {
+            listCandidateJobs(user?.account_id, user?.candidate_id, "2").then((response) => {
                 setJobs(response.data.data);
                 if(response.data.data.length === 1){
                     set_selected_job(response.data.data[0].job_id)
