@@ -39,6 +39,7 @@ import {
 import CustomTextInput from '../../components/TextInput';
 const MODULE_ID = '52';
 import BaseUrl from '../../api/BaseUrl';
+import axios from 'axios';
 const AddTimeSheetScreen = ({navigation}) => {
   const {user} = useSelector(state => state.LoginReducer);
   const {status} = useSelector(state => state.StatusReducer);
@@ -87,7 +88,7 @@ const AddTimeSheetScreen = ({navigation}) => {
       .then(response => {
         //if()
         if (response.status === 200) {
-          console.log('[response.data.dat]',response.data.data);
+          console.log('[response.data.dat]', response.data.data);
           if (response.data.data.length === 1) {
             set_selected_job(response.data.data[0].job_id);
             getJobtimetype(response.data.data[0].job_id);
@@ -178,7 +179,7 @@ const AddTimeSheetScreen = ({navigation}) => {
       setWeekDays(weekdays);
       setAlldata([[...weekdays]]);
     } else {
-      let weekdays = moment(date).format('DD-MMM-YYYY');//MMM ddd DD
+      let weekdays = moment(date).format('DD-MMM-YYYY'); //MMM ddd DD
 
       setWeekDays([
         {
@@ -197,7 +198,27 @@ const AddTimeSheetScreen = ({navigation}) => {
     setAlldata(temparray);
   };
 
-  const ValidateData = is_draft => {
+  const showErrorSuccessAddTimeSheet = (isSuccess, isError, message) => {
+    if (isSuccess) {
+      if (message !== '') {
+        setMessageToShowInMdodal(message);
+      }
+      setProcessing(false);
+      setAllDone(true);
+      setsubmissionError(false);
+      setLoading(false);
+    } else if (isError) {
+      if (message !== '') {
+        setMessageToShowInMdodal(message);
+      }
+      setProcessing(false);
+      setAllDone(true);
+      setsubmissionError(true);
+      setLoading(false);
+    }
+  };
+
+  const ValidateData = async is_draft => {
     let error = false;
     if (selected_job == null) {
       setVisible(true);
@@ -239,7 +260,7 @@ const AddTimeSheetScreen = ({navigation}) => {
           if (itm.hours > 0 && itm.hours !== null) {
             logs.push({
               log_type: time_type[i].name,
-              log_date: itm.insert_date,
+              log_date: moment(itm.insert_date).format('YYYY-MM-DD'),
               log_hours: moment(itm.hours.toString(), 'LT').format('hh:mm:ss'),
             });
           }
@@ -272,17 +293,12 @@ const AddTimeSheetScreen = ({navigation}) => {
           body: formdata,
         };
 
-        fetch(`${BaseUrl}files`, requestOptions)
-          .then(data => {
-            console.log('[json data]', data.json());
-            return data.json()
-          
-          })
-          .then(data2 => {
-            // console.log('[Post Api data]',data);
-            console.log('Post Api data 2',data2)
+        try {
+          const response = await fetch(`${BaseUrl}files`, requestOptions);
+          let fileUploadResponse = await response.json();
+          console.log('[fileUploadResponse]', fileUploadResponse);
+          if (fileUploadResponse?.status) {
             let data = {
-             
               job_id: selected_job,
               candidate_id: user.candidate_id,
               account_id: user.account_id,
@@ -297,63 +313,99 @@ const AddTimeSheetScreen = ({navigation}) => {
               placement_id: s_job.placement_id,
               comments: comments,
               is_attachment: filepath.path !== null ? '1' : '0',
-              time_sheet_id: data2.insert_doc_id,
+              time_sheet_id: fileUploadResponse.insert_doc_id,
               title: filepath.name,
-              path: data2.path,
+              path: fileUploadResponse.path,
               logs: logs,
+              isApp: '1',
             };
-            console.log('[detail data]',data);
+            console.log('[detail data]', data);
+            submitTimeSheet(data, is_draft);
+          }
+        } catch (err) {
+          console.log('[err]', err);
+          showErrorSuccessAddTimeSheet(false, true, '');
+        }
 
-            addTimeSheet(data)
-              .then(data => {
-                 console.log(' Add timesheet data', data)
-                if (response.status === 200) {
-                  console.log('[data response status]', response.status);
-                  if (is_draft) {
-                    setMessageToShowInMdodal(
-                      'TimeSheet draft saved successfully',
-                    );
-                  } else {
-                    setMessageToShowInMdodal(
-                      'TimeSheet not added',
-                    );
-                  }
+        // fetch(`${BaseUrl}files`, requestOptions)
+        //   .then(data => {
+        //     console.log('[json data]', data.json());
+        //     return data.json();
+        //   })
+        //   .then(data2 => {
+        //     // console.log('[Post Api data]',data);
+        //     console.log('Post Api data 2', data2);
+        //     let data = {
+        //       job_id: selected_job,
+        //       candidate_id: user.candidate_id,
+        //       account_id: user.account_id,
+        //       module_status_id: is_draft
+        //         ? timesheet_status
+        //             .filter(obj => obj.module_status_name === 'Draft')
+        //             .map(o => o.module_status_id)[0]
+        //         : timesheet_status
+        //             .filter(obj => obj.module_status_name === 'Submitted')
+        //             .map(o => o.module_status_id)[0],
+        //       time_sheet_view: time_sheet_type,
+        //       placement_id: s_job.placement_id,
+        //       comments: comments,
+        //       is_attachment: filepath.path !== null ? '1' : '0',
+        //       time_sheet_id: data2.insert_doc_id,
+        //       title: filepath.name,
+        //       path: data2.path,
+        //       logs: logs,
+        //     };
+        //     console.log('[detail data]', data);
 
-                  setProcessing(false);
-                  setAllDone(true);
-                  setsubmissionError(false);
-                } else {
-                  if (is_draft) {
-                    setMessageToShowInMdodal('TimeSheet draft has some error');
-                  } else {
-                    setMessageToShowInMdodal('TimeSheet saved successfully');
-                  }
+        //     addTimeSheet(data)
+        //       .then(data => {
+        //         console.log(' Add timesheet data', data);
+        //         if (response.status === 200) {
+        //           console.log('[data response status]', response.status);
+        //           if (is_draft) {
+        //             setMessageToShowInMdodal(
+        //               'TimeSheet draft saved successfully',
+        //             );
+        //           } else {
+        //             setMessageToShowInMdodal('TimeSheet not added');
+        //           }
 
-                  setProcessing(false);
-                  setAllDone(true);
-                  setsubmissionError(true);
-                }
-                setLoading(false);
-              })
-              .catch(err => {
-                if (is_draft) {
-                  setMessageToShowInMdodal('TimeSheet draft has some error');
-                } else {
-                  setMessageToShowInMdodal('TimeSheet saved successfully');
-                }
-                setProcessing(false);
-                setAllDone(true);
-                setsubmissionError(true);
-                setLoading(false);
-              });
-          })
-          .catch(err => {
-            setMessageToShowInMdodal('Attachment does not uploaded');
-            setProcessing(false);
-            setAllDone(true);
-            setsubmissionError(true);
-            setLoading(false);
-          });
+        //           setProcessing(false);
+        //           setAllDone(true);
+        //           setsubmissionError(false);
+        //         } else {
+        //           if (is_draft) {
+        //             setMessageToShowInMdodal('TimeSheet draft has some error');
+        //           } else {
+        //             setMessageToShowInMdodal('TimeSheet saved successfully');
+        //           }
+
+        //           setProcessing(false);
+        //           setAllDone(true);
+        //           setsubmissionError(true);
+        //         }
+        //         setLoading(false);
+        //       })
+        //       .catch(err => {
+        //         if (is_draft) {
+        //           setMessageToShowInMdodal('TimeSheet draft has some error');
+        //         } else {
+        //           setMessageToShowInMdodal('TimeSheet saved successfully');
+        //         }
+        //         setProcessing(false);
+        //         setAllDone(true);
+        //         setsubmissionError(true);
+        //         setLoading(false);
+        //       });
+        //   })
+        //   .catch(err => {
+        //     console.log('[error]', err.response);
+        //     setMessageToShowInMdodal('Attachment does not uploaded');
+        //     setProcessing(false);
+        //     setAllDone(true);
+        //     setsubmissionError(true);
+        //     setLoading(false);
+        //   });
       } else {
         let s_job = jobs.find(x => (x.job_id = selected_job));
         let data = {
@@ -373,44 +425,70 @@ const AddTimeSheetScreen = ({navigation}) => {
           comments: comments,
           is_attachment: '0',
           logs: logs,
+          isApp: '1',
         };
+        submitTimeSheet(data, is_draft);
         addTimeSheet(data)
           .then(response => {
             if (response.status === 200) {
-              if (is_draft) {
-                setMessageToShowInMdodal('TimeSheet draft saved successfully');
-              } else {
-                setMessageToShowInMdodal('TimeSheet  not submitted successfully');
-              }
-
-              setProcessing(false);
-              setAllDone(true);
-              setsubmissionError(false);
-            } else {
-              if (is_draft) {
-                setMessageToShowInMdodal('TimeSheet draft saved successfully');
-              } else {
-                setMessageToShowInMdodal('TimeSheet  not saved successfully');
-              }
-
-              setProcessing(false);
-              setAllDone(true);
-              setsubmissionError(true);
+              showErrorSuccessAddTimeSheet(
+                true,
+                false,
+                is_draft
+                  ? 'TimeSheet saved successfully'
+                  : 'TimeSheet Draft saved successfully',
+              );
             }
-            setLoading(false);
           })
           .catch(err => {
-            if (is_draft) {
-              setMessageToShowInMdodal('TimeSheet saved successfully');
-            } else {
-              setMessageToShowInMdodal('TimeSheet saved successfully');
-            }
-            setProcessing(false);
-            setAllDone(true);
-            setsubmissionError(true);
-            setLoading(false);
+            showErrorSuccessAddTimeSheet(
+              false,
+              true,
+              is_draft
+                ? 'TimeSheet saved successfully'
+                : 'TimeSheet Draft saved successfully',
+            );
           });
       }
+    }
+  };
+
+  // Create a function to make the Axios POST request
+  const submitTimeSheet = async (data, is_draft) => {
+    try {
+      const axiosInstance = axios.create({
+        baseURL: BaseUrl,
+        headers: {
+          Authorization: 'Bearer 4545980ce66bd555d903f7dc739f91e631606eb1',
+          'Content-Type': 'application/json',
+        },
+      });
+      const response = await axiosInstance.post('timesheet?isApp=1', data);
+      console.log('[addTimeSheetResponse]', response.data);
+      if (response.data.status) {
+        if (is_draft) {
+          showErrorSuccessAddTimeSheet(
+            true,
+            false,
+            'TimeSheet Draft saved successfully',
+          );
+        } else {
+          showErrorSuccessAddTimeSheet(
+            true,
+            false,
+            'TimeSheet saved successfully',
+          );
+        }
+      }
+    } catch (error) {
+      console.log('An error occurred:', error.response);
+      showErrorSuccessAddTimeSheet(
+        false,
+        true,
+        is_draft
+          ? 'TimeSheet Draft did not saved successfully'
+          : 'TimeSheet did not saved successfully',
+      );
     }
   };
 
@@ -465,7 +543,7 @@ const AddTimeSheetScreen = ({navigation}) => {
       let wdays = await getISOWeekDates(weekNumber);
       setWeekDays(wdays);
     } else {
-      let wdays = moment(startDate).format('DD-MMM-YYYY');//ddd DD MMM
+      let wdays = moment(startDate).format('DD-MMM-YYYY'); //ddd DD MMM
       setWeekDays([
         {
           date: wdays,

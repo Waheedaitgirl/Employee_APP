@@ -10,8 +10,8 @@ service.interceptors.request.use(
   async config => {
     config.headers['Authorization'] = '';
     if (true) {
-      config.headers['Authorization'] =  'Bearer 4545980ce66bd555d903f7dc739f91e631606eb1';
-     
+      config.headers['Authorization'] =
+        'Bearer 4545980ce66bd555d903f7dc739f91e631606eb1';
     }
     return config;
   },
