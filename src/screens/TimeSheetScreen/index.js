@@ -42,7 +42,8 @@ const TimeSheetListScreen = ({navigation}) => {
     setLoading(true);
     listTimeSheetByCandidateId(user?.account_id, user?.candidate_id)
       .then(response => {
-        if (response.status == 200) {
+        if (response.status === 200) {
+          console.log('[All TimeSheets]', response?.data?.data);
           setData(response?.data?.data);
           setFilterData(response?.data?.data);
           setLoading(false);
@@ -60,31 +61,35 @@ const TimeSheetListScreen = ({navigation}) => {
         setErrorMessage('Some Error Ocured with status code 200');
       });
   };
-  
+
   const renderItem = ({item}) => {
-    console.log("[time renderITEM]",item);
-    return(
-    <TimeSheetFlatListItem
-      time={`${item.time_sheet_view} Starts At ${item.log_date}`}
-      name={item.job_title}
-      item={item}
-      submittedto={
-        item.module_id === '3'
-          ? item.cc_approver_name
-          : item.module_id === '0'
-          ? item.p_approver_name
-          : item.module_id === '4'
-          ? item.cn_approver_name
-          : item.cc_approver_name
-      }
-      status={item.module_status_name}
-      status_style={item.status_colour_code}
-      hours={`${item.log_hours} Hours`}
-      onPress={() => navigation.navigate(MainRoutes.DetailsSheetScreen, {item})}
-      onEdit={() => navigation.navigate(MainRoutes.EditTimeSheetScreen, {item})}
-      onDelete={() => getList()}
-    />
-  )};
+    return (
+      <TimeSheetFlatListItem
+        time={`${item.time_sheet_view} Starts At ${item.log_date}`}
+        name={item.job_title}
+        item={item}
+        submittedto={
+          item.module_id === '3'
+            ? item.cc_approver_name
+            : item.module_id === '0'
+            ? item.p_approver_name
+            : item.module_id === '4'
+            ? item.cn_approver_name
+            : item.cc_approver_name
+        }
+        status={item.module_status_name}
+        status_style={item.status_colour_code}
+        hours={`${item.log_hours} Hours`}
+        onPress={() =>
+          navigation.navigate(MainRoutes.DetailsSheetScreen, {item})
+        }
+        onEdit={() =>
+          navigation.navigate(MainRoutes.EditTimeSheetScreen, {item})
+        }
+        onDelete={() => getList()}
+      />
+    );
+  };
 
   const filterbydate = (date, is_start) => {
     if (is_start) {
@@ -106,12 +111,12 @@ const TimeSheetListScreen = ({navigation}) => {
   };
 
   const FilterbyStatus = status => {
-    if (status ==='All') {
+    if (status === 'All') {
       setFilterData(data);
     } else if (status === '0') {
       //Approved
       let draft_data = data.filter(function (item) {
-        return item.module_status_name === "Approved";
+        return item.module_status_name === 'Approved';
       });
       setFilterData(draft_data);
     } else if (status === '1') {
@@ -129,7 +134,7 @@ const TimeSheetListScreen = ({navigation}) => {
     } else if (status === '3') {
       //Rejected
       let draft_data = data.filter(function (item) {
-        return item.module_status_name === "Rejected";
+        return item.module_status_name === 'Rejected';
       });
       setFilterData(draft_data);
     }
@@ -282,17 +287,6 @@ const TimeSheetListScreen = ({navigation}) => {
 };
 
 export default TimeSheetListScreen;
-
-
-
-
-
-
-
-
-
-
-
 
 //  {....... ....... ........ ............ .............. .............. ............ .......... .......}
 

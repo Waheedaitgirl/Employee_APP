@@ -335,6 +335,7 @@ const GeneralProfileScreen = ({navigation}) => {
       });
   };
   if (!is_Editabe) {
+    console.log("[user profile]",user);
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
         <View style={commonStyles.container}>
